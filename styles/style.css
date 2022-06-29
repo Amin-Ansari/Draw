@@ -46,3 +46,27 @@ body {
 .winner-btn:hover.winner-btn::before {
   width: 100%;
 }
+ul {
+  width: 80%;
+  height: auto;
+  border: 3px solid salmon;
+  margin: 20px auto;
+  border-radius: 5px;
+  padding: 10px 15px;
+  transition: height 0.3s;
+}
+ul > li {
+  margin: 20px 10px;
+}
+.winner-user {
+  display: none;
+  height: 0px;
+}
+.show {
+  display: block !important;
+  height: auto !important;
+}
+
+.winner-user > li {
+  list-style-image: url(../images/The\ winner.png);
+}
