@@ -42,12 +42,16 @@ function showTheWiner() {
         allTheUsers = JSON.parse(allTheUsers);
         for (let element of allTheUsers) {
           if (element.id === randomId) {
-            let li = createLi();
-            li.innerHTML += `The user's id: ${element.id} <br />`;
-            li.innerHTML += `The user's title: ${element.title} <br />`;
-            lists[0].appendChild(li);
-            if (!lists[0].classList.contains("show")) {
-              lists[0].classList.add("show");
+            let currentWinner = document.querySelectorAll(".winner-user > li");
+            if (currentWinner.length < Number(theNumberInput.value)) {
+              console.log(currentWinner.length);
+              let li = createLi();
+              li.innerHTML += `The user's id: ${element.id} <br />`;
+              li.innerHTML += `The user's title: ${element.title} <br />`;
+              lists[0].appendChild(li);
+              if (!lists[0].classList.contains("show")) {
+                lists[0].classList.add("show");
+              }
             }
           }
         }
