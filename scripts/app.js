@@ -40,34 +40,38 @@ function createLi() {
   return document.createElement("li");
 }
 function showTheWiner() {
-  for (let i = 1; i <= Number(theNumberInput.value); i++) {
-    let randomId = Math.floor(Math.random() * 101);
-    if (randomId == 0) {
-      randomId++;
-    }
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", `https://jsonplaceholder.typicode.com/posts`);
-    xhr.onload = function () {
-      if (xhr.status == 200) {
-        let allTheUsers = this.responseText;
-        allTheUsers = JSON.parse(allTheUsers);
-        for (let element of allTheUsers) {
-          if (element.id === randomId) {
-            let currentWinner = document.querySelectorAll(".winner-user > li");
-            if (currentWinner.length < Number(theNumberInput.value)) {
-              console.log(currentWinner.length);
-              let li = createLi();
-              li.innerHTML += `The user's id: ${element.id} <br />`;
-              li.innerHTML += `The user's title: ${element.title} <br />`;
-              lists[0].appendChild(li);
-              if (!lists[0].classList.contains("show")) {
-                lists[0].classList.add("show");
+  let allpromise = new Promise(allExecutor);
+  function allExecutor(resolve, reject) {
+    for (let i = 1; i <= Number(theNumberInput.value); i++) {
+      let randomId = Math.floor(Math.random() * 101);
+      if (randomId == 0) {
+        randomId++;
+      }
+      let xhr = new XMLHttpRequest();
+      xhr.open("GET", `https://jsonplaceholder.typicode.com/posts`);
+      xhr.onload = function () {
+        if (xhr.status == 200) {
+          let allTheUsers = this.responseText;
+          allTheUsers = JSON.parse(allTheUsers);
+          for (let element of allTheUsers) {
+            if (element.id === randomId) {
+              let currentWinner =
+                document.querySelectorAll(".winner-user > li");
+              if (currentWinner.length < Number(theNumberInput.value)) {
+                console.log(currentWinner.length);
+                let li = createLi();
+                li.innerHTML += `The user's id: ${element.id} <br />`;
+                li.innerHTML += `The user's title: ${element.title} <br />`;
+                lists[0].appendChild(li);
+                if (!lists[0].classList.contains("show")) {
+                  lists[0].classList.add("show");
+                }
               }
             }
           }
         }
-      }
-    };
-    xhr.send();
+      };
+      xhr.send();
+    }
   }
 }
