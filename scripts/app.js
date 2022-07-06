@@ -9,21 +9,38 @@ window.addEventListener("load", showAllTheUsers);
 randomButton.addEventListener("click", showTheWiner);
 
 function showAllTheUsers() {
-  let xhr = new XMLHttpRequest();
-  xhr.open("GET", `https://jsonplaceholder.typicode.com/posts`);
-  xhr.onload = function () {
-    if (xhr.status == 200) {
-      let allTheUsers = this.responseText;
-      allTheUsers = JSON.parse(allTheUsers);
-      for (let element of allTheUsers) {
-        let li = createLi();
-        li.innerHTML += `The user's id: ${element.id} <br />`;
-        li.innerHTML += `The user's title: ${element.title} <br />`;
-        lists[1].appendChild(li);
+  let winnerPromise = new Promise(winnerExecutor);
+  function winnerExecutor(resolve, reject) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", `https://jsonplaceholder.typicode.com/posts`);
+    xhr.onload = function () {
+      if (xhr.status == 200) {
+        let allTheUsers = this.responseText;
+
+        // let allTheUsers = this.responseText;
+        // allTheUsers = JSON.parse(allTheUsers);
+        resolve(allTheUsers);
+        for (let element of allTheUsers) {
+          // let li = createLi();
+          // li.innerHTML += `The user's id: ${element.id} <br />`;
+          // li.innerHTML += `The user's title: ${element.title} <br />`;
+          // lists[1].appendChild(li);
+          reject();
+        }
       }
-    }
-  };
-  xhr.send();
+    };
+    xhr.send();
+  }
+  winnerPromise.then(onFullFiled, onReject);
+}
+function onFullFiled(allTheUsers) {
+  allTheUsers = JSON.parse(allTheUsers);
+}
+function onReject() {
+  let li = createLi();
+  li.innerHTML += `The user's id: ${element.id} <br />`;
+  li.innerHTML += `The user's title: ${element.title} <br />`;
+  lists[1].appendChild(li);
 }
 function createLi() {
   return document.createElement("li");
