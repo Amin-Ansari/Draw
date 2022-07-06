@@ -1,6 +1,6 @@
 let randomButton = document.querySelector("button");
 let lists = document.querySelectorAll("ul");
-let theNumberInput = document.querySelector(".winner-number");
+let theNumberInput = document.querySelector(".winner-number ");
 let winners = {
   winnerId: [],
 };
