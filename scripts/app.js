@@ -17,31 +17,25 @@ function showAllTheUsers() {
       if (xhr.status == 200) {
         let allTheUsers = this.responseText;
 
-        // let allTheUsers = this.responseText;
-        // allTheUsers = JSON.parse(allTheUsers);
         resolve(allTheUsers);
-        for (let element of allTheUsers) {
-          // let li = createLi();
-          // li.innerHTML += `The user's id: ${element.id} <br />`;
-          // li.innerHTML += `The user's title: ${element.title} <br />`;
-          // lists[1].appendChild(li);
-          reject();
-        }
+      } else {
+        reject();
       }
     };
     xhr.send();
   }
-  winnerPromise.then(onFullFiled, onReject);
+  winnerPromise.then(onFullFiled);
 }
 function onFullFiled(allTheUsers) {
   allTheUsers = JSON.parse(allTheUsers);
+  for (let element of allTheUsers) {
+    let li = createLi();
+    li.innerHTML += `The user's id: ${element.id} <br />`;
+    li.innerHTML += `The user's title: ${element.title} <br />`;
+    lists[1].appendChild(li);
+  }
 }
-function onReject() {
-  let li = createLi();
-  li.innerHTML += `The user's id: ${element.id} <br />`;
-  li.innerHTML += `The user's title: ${element.title} <br />`;
-  lists[1].appendChild(li);
-}
+
 function createLi() {
   return document.createElement("li");
 }
